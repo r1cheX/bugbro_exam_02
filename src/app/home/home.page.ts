@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Cliente } from '../models/cliente';
+import { ClienteService } from '../services/cliente.service';
 
 @Component({
   selector: 'app-home',
@@ -7,6 +9,19 @@ import { Component } from '@angular/core';
 })
 export class HomePage {
 
-  constructor() {}
-
+  clientes: Cliente[] | undefined;
+  constructor(private service: ClienteService
+  ) {
+  }
+  ngOnInit() {
+    this.service.ObtenerClientes().subscribe(
+      (response) => {
+        console.log("respuesta >>", response);
+        this.clientes = response;
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
 }
